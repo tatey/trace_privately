@@ -12,7 +12,7 @@ This is a sample HTTP key server for the sample [TracePrivately app](https://git
 
 ## System Dependencies
 
-- [Ruby](https://www.ruby-lang.org/) 2.6.5
+- [Ruby](https://www.ruby-lang.org/) 2.6.6
 - [Bundler](https://bundler.io/)
 - [Node](https://nodejs.org/) 13+
 - [Yarn](https://yarnpkg.com/)
