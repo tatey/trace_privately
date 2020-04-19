@@ -1,6 +1,14 @@
 # HTTP Key Server for TracePrivately
 
-This is a sample HTTP key server for the sample [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately).
+This is a sample HTTP key server for the sample [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress.
+
+# Objectives
+
+- Be a robust companion to the [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately)
+- Create a fully-functioning prototype that governments can rebrand as necessary and use
+- Implement correct security and privacy principles to maximise uptake of said government apps
+- Remain open source for independent verification
+- Tools for moderating submissions and exporting data in open formats
 
 ## System Dependencies
 
