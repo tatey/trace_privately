@@ -24,6 +24,10 @@ The setup script will install the application's dependencies and prepare the dat
 
     $ ./bin/setup
 
+Run the test suite to see if everything is working correctly.
+
+    $ ./bin/rails test
+
 Start the server on port 3000 and begin receiving requests:
 
     $ ./bin/rails server --port 3000
