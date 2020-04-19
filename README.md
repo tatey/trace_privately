@@ -5,10 +5,11 @@ This is a sample HTTP key server for the sample [TracePrivately app](https://git
 # Objectives
 
 - Be a robust companion to the [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately)
-- Create a fully-functioning prototype that governments can rebrand as necessary and use
+- Create a fully-functioning prototype that governments can use as an almost-turnkey solution that they can rebrand as necessary and use
 - Implement correct security and privacy principles to maximise uptake of said government apps
 - Remain open source for independent verification
 - Tools for moderating submissions and exporting data in open formats
+- Work in a localized manner so it can be used in any language or jurisdiction
 
 ## System Dependencies
 
