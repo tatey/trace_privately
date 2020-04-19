@@ -6,7 +6,7 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_equal 0, Submission.negative.count
     get "/api/infected", as: :json
     assert_response :ok
-    assert_equal("OK", response.parsed_body["status"])
+    assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -18,7 +18,7 @@ class ApiTest < ActionDispatch::IntegrationTest
 
     get "/api/infected", as: :json
     assert_response :ok
-    assert_equal("OK", response.parsed_body["status"])
+    assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     assert_equal submission.infected_keys.pluck(:data), response.parsed_body["keys"]
     assert_empty response.parsed_body["deleted_keys"]
@@ -65,7 +65,7 @@ class ApiTest < ActionDispatch::IntegrationTest
 
     get "/api/infected", params: {since: Time.zone.local(2020, 4, 19, 20, 40)}, as: :json
     assert_response :ok
-    assert_equal("OK", response.parsed_body["status"])
+    assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     assert_equal submission1.infected_keys.pluck(:data), response.parsed_body["deleted_keys"]
@@ -76,7 +76,7 @@ class ApiTest < ActionDispatch::IntegrationTest
       post "/api/submit", params: {keys: ["A", "B", "C"]}, as: :json
     end
     assert_response :ok
-    assert_equal("OK", response.parsed_body["status"])
+    assert_equal "OK", response.parsed_body["status"]
     assert Submission.last.pending?
   end
 
