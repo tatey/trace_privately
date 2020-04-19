@@ -9,8 +9,9 @@ class ApiTest < ActionDispatch::IntegrationTest
   end
 
   test "getting infected keys" do
-    one = InfectedKey.create!(data: "1")
-    two = InfectedKey.create!(data: "2")
+    submission = Submission.create!
+    one = submission.infected_keys.create!(data: "1")
+    two = submission.infected_keys.create!(data: "2")
 
     get "/api/infected", as: :json
     assert_response :ok
@@ -20,8 +21,9 @@ class ApiTest < ActionDispatch::IntegrationTest
   end
 
   test "getting infected keys since a given timestamp" do
-    one = InfectedKey.create!(data: "1", updated_at: Time.zone.local(2020, 4, 19, 10, 43))
-    two = InfectedKey.create!(data: "2", updated_at: Time.zone.local(2020, 4, 19, 10, 41))
+    submission = Submission.create!
+    one = submission.infected_keys.create!(data: "1", updated_at: Time.zone.local(2020, 4, 19, 10, 43))
+    two = submission.infected_keys.create!(data: "2", updated_at: Time.zone.local(2020, 4, 19, 10, 41))
 
     get "/api/infected", params: {since: Time.zone.local(2020, 4, 19, 10, 42)}, as: :json
     assert_response :ok
@@ -31,11 +33,12 @@ class ApiTest < ActionDispatch::IntegrationTest
   end
 
   test "submitting infected keys" do
-    assert_difference "InfectedKey.count", 3 do
-      post "/api/submit", params: {keys: ["1", "2", "3"]}, as: :json
+    assert_difference -> { Submission.count } => 1, -> { InfectedKey.count } => 3 do
+      post "/api/submit", params: {keys: ["A", "B", "C"]}, as: :json
     end
     assert_response :ok
     assert_equal("OK", response.parsed_body["status"])
+    assert Submission.last.pending?
   end
 
   test "submitting a malformed infected key" do

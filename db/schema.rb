@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_214641) do
+ActiveRecord::Schema.define(version: 2020_04_19_100206) do
 
   create_table "infected_keys", force: :cascade do |t|
     t.text "data", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "submission_id", null: false
     t.index ["created_at"], name: "index_infected_keys_on_created_at"
+    t.index ["submission_id"], name: "index_infected_keys_on_submission_id"
     t.index ["updated_at"], name: "index_infected_keys_on_updated_at"
   end
 
+  create_table "submissions", force: :cascade do |t|
+    t.integer "result", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "infected_keys", "submissions"
 end

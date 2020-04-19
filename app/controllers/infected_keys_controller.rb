@@ -10,9 +10,10 @@ class InfectedKeysController < ApplicationController
 
   def create
     keys_data = params.require(:keys)
-    InfectedKey.transaction do
+    Submission.transaction do
+      submission = Submission.create!
       keys_data.each do |key_data|
-        InfectedKey.create!(data: key_data)
+        submission.infected_keys.create!(data: key_data)
       end
     end
   end
