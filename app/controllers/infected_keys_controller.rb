@@ -2,10 +2,7 @@ class InfectedKeysController < ApplicationController
   skip_forgery_protection
 
   def index
-    submissions = Submission.recent.limit(1_000) # TODO: Paginate?
-    if since = extract_since_from_params
-      submissions = submissions.since(since)
-    end
+    submissions = Submission.recent.changed_since(extract_since_from_params_or_default).limit(1_000) # TODO: Paginate?
     @updated_at = submissions.first&.updated_at || Time.current
     @positively_infected_keys = InfectedKey.where(submission_id: submissions.positive)
     @negatively_infected_keys = InfectedKey.where(submission_id: submissions.negative)
@@ -23,9 +20,15 @@ class InfectedKeysController < ApplicationController
 
   private
 
-  def extract_since_from_params
-    Time.zone.parse(params[:since]) if params[:since]
-  rescue ArgumentError
-    nil
+  def extract_since_from_params_or_default
+    default = 30.days.ago
+    return default unless params[:since]
+
+    since = Time.zone.parse(params[:since]) rescue default
+    if since >= default
+      since
+    else
+      default
+    end
   end
 end
