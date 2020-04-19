@@ -1,6 +1,6 @@
 # HTTP Key Server for TracePrivately
 
-This is a sample HTTP key server for the sample [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress.
+This is a sample HTTP key server for the sample [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress. If you want to help take a look at the [Issues](https://github.com/tatey/trace_privately/issues).
 
 # Objectives
 
