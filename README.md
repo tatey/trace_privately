@@ -56,3 +56,7 @@ Submit infected keys:
     {
       "status": "OK"
     }
+
+## License
+
+The software is available as open source under the terms of the MIT License. See LICENSE.
