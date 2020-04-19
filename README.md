@@ -34,7 +34,7 @@ Start the server on port 3000 and begin receiving requests:
 
 ## Usage
 
-Get a list of infected keys since a specific time:
+Get a list of infected keys since a specific time (Limited to 30 days ago):
 
     $ curl -s -v -X GET -H "Accept: application/json" "http://localhost:3000/api/infected?since=2020-04-19T00:00:00Z" | jq
     < HTTP/1.1 200 OK
@@ -57,6 +57,9 @@ Get a list of infected keys since a specific time:
         "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI=",
         "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzE=",
         "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzA="
+      ],
+      "deleted_keys": [
+        "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEz"
       ]
     }
 
