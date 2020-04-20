@@ -3,6 +3,7 @@ class Submission < ApplicationRecord
 
   enum result: [:pending, :positive, :negative]
 
-  scope :recent, -> { order(updated_at: :desc) }
+  scope :by_recently_created_first, -> { order(created_at: :desc) }
+  scope :by_recently_changed_first, -> { order(updated_at: :desc) }
   scope :changed_since, -> (since) { where("updated_at >= ?", since) }
 end

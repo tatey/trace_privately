@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class ApiTest < ActionDispatch::IntegrationTest
+  def setup
+    Submission.destroy_all
+  end
+
   test "getting infected keys when there are none" do
     assert_equal 0, Submission.positive.count
     assert_equal 0, Submission.negative.count

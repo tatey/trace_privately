@@ -2,7 +2,7 @@ class InfectedKeysController < ApplicationController
   skip_forgery_protection
 
   def index
-    submissions = Submission.recent.changed_since(extract_since_from_params_or_default).limit(1_000) # TODO: Paginate?
+    submissions = Submission.changed_since(extract_since_from_params_or_default).by_recently_changed_first.limit(1_000) # TODO: Paginate?
     @updated_at = submissions.first&.updated_at || Time.current
     @positively_infected_keys = InfectedKey.where(submission_id: submissions.positive)
     @negatively_infected_keys = InfectedKey.where(submission_id: submissions.negative)

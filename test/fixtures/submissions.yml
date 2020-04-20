@@ -1,0 +1,14 @@
+pending:
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+  result: pending
+
+positive:
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
+  result: negative
+
+negative:
+  created_at: <%= 29.days.ago %>
+  updated_at: <%= 29.days.ago %>
+  result: positive

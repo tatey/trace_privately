@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title"><%= t ".title" %></h1>
+    <% if @submissions.empty? %>
+      <p><%= t ".empty" %></p>
+    <% else %>
+      <table class="table is-fullwidth">
+        <thead>
+          <th><%= t ".table.head.created_at" %></th>
+          <th><%= t ".table.head.updated_at" %></th>
+          <th><%= t ".table.head.result" %></th>
+        </thead>
+        <tbody>
+          <% @submissions.each do |submission| %>
+            <tr>
+              <td><%= submission.created_at %></td>
+              <td><%= submission.updated_at %></td>
+              <td><%= submission.result %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</section>
