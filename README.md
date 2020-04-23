@@ -42,6 +42,15 @@ Start the server on port 3000 and begin receiving requests:
 
 ## Usage
 
+### Admin
+
+View recent submissions and confirm test results.
+
+![Screenshot of a list of submissions](doc/screenshots/admin_index.png?raw=true)
+![Screenshot of an individual submission](doc/screenshots/admin_show.png?raw=true)
+
+### API
+
 Get a list of infected keys since a specific time (Limited to 30 days ago):
 
     $ curl -s -v -X GET -H "Accept: application/json" "http://localhost:3000/api/infected?since=2020-04-19T00:00:00Z" | jq
