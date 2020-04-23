@@ -1,0 +1,54 @@
+<section class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to t(".breadcrumbs.submissions"), admin_submissions_path %></li>
+        <li class="is-active"><a href="#" aria-current="page"><%= t ".title", number: @submission.number %></a></li>
+      </ul>
+    </nav>
+    <h1 class="title"><%= t ".title", number: @submission.number %></h1>
+
+    <div class="notification <%= result_class(@submission.result) %>">
+      <%= t ".#{@submission.result}" %>
+    </div>
+
+    <div class="box">
+      <%= form_with model: @submission, url: admin_submission_path(@submission) do |form| %>
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <%= form.label :result, t(".form.result.label"), class: "label"  %>
+            </div>
+            <div class="level-item">
+              <div class="field is-grouped">
+                <div class="control">
+                  <div class="select">
+                    <%= form.select :result, @submission.class.results.map { |key, value| [t(".form.result.values.#{key}"), key] } %>
+                  </div>
+                </div>
+                <div class="control">
+                  <%= form.submit class: "button is-primary" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="content">
+      <h2 class="title"><%= t ".created_at" %></h2>
+      <p><%= l @submission.created_at, format: :long %></p>
+
+      <h2 class="title"><%= t ".updated_at" %></h2>
+      <p><%= l @submission.updated_at, format: :long %></p>
+
+      <h2 class="title"><%= t ".infected_keys" %></h2>
+      <ul>
+        <% @submission.infected_keys.each do |infected_key| %>
+          <li><%= infected_key.data %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

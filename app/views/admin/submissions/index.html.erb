@@ -1,11 +1,20 @@
 <section class="section">
   <div class="container">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li class="is-active"><a href="#" aria-current="page"><%= t ".title" %></a></li>
+      </ul>
+    </nav>
     <h1 class="title"><%= t ".title" %></h1>
+
     <% if @submissions.empty? %>
-      <p><%= t ".empty" %></p>
+      <div class="content">
+        <p><%= t ".empty" %></p>
+      </div>
     <% else %>
       <table class="table is-fullwidth">
         <thead>
+          <th><%= t ".table.head.number" %></th>
           <th><%= t ".table.head.created_at" %></th>
           <th><%= t ".table.head.updated_at" %></th>
           <th><%= t ".table.head.result" %></th>
@@ -13,9 +22,12 @@
         <tbody>
           <% @submissions.each do |submission| %>
             <tr>
-              <td><%= submission.created_at %></td>
-              <td><%= submission.updated_at %></td>
-              <td><%= submission.result %></td>
+              <td><%= link_to submission.number, admin_submission_path(submission) %></td>
+              <td><%= l submission.created_at, format: :long %></td>
+              <td><%= l submission.updated_at, format: :long %></td>
+              <td>
+                <span class="tag <%= result_class(submission.result) %>"><%= t ".table.body.results.#{submission.result}" %></span>
+              </td>
             </tr>
           <% end %>
         </tbody>

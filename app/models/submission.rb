@@ -6,4 +6,8 @@ class Submission < ApplicationRecord
   scope :by_recently_created_first, -> { order(created_at: :desc) }
   scope :by_recently_changed_first, -> { order(updated_at: :desc) }
   scope :changed_since, -> (since) { where("updated_at >= ?", since) }
+
+  def number
+    "#%010d" % id
+  end
 end

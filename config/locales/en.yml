@@ -10,6 +10,32 @@ en:
         empty: "No submissions. When a submission is made it will appear here."
         table:
           head:
+            number: "Number"
             created_at: "Created"
             updated_at: "Changed"
-            result: "Result"
+            result: "Test Result"
+          body:
+            results:
+              pending: "Pending"
+              positive: "Positive"
+              negative: "Negative"
+      show:
+        title: "Submission %{number}"
+        created_at: "Created"
+        updated_at: "Changed"
+        infected_keys: "Infected Keys"
+        pending: "Test result is pending"
+        positive: "Test result is positive"
+        negative: "Test result is negative"
+        breadcrumbs:
+          submissions: "Submissions"
+        form:
+          result:
+            label: "Confirm result is"
+            values:
+              pending: "pending"
+              positive: "positive"
+              negative: "negative"
+      update:
+        flashes:
+          success: "Submission %{number} has been updated"

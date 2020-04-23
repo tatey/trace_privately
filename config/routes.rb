@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   post "/api/submit", to: "infected_keys#create"
 
   namespace :admin do
-    resources :submissions, only: [:index]
+    resources :submissions, only: [:index, :show, :update]
   end
 
   root to: "admin/submissions#index"
