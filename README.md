@@ -13,21 +13,28 @@ This is a sample HTTP key server for the sample [TracePrivately app](https://git
 
 ## System Dependencies
 
+For running or developing the app:
+
 - [Ruby](https://www.ruby-lang.org/) 2.6.6
 - [Bundler](https://bundler.io/)
 - [Node](https://nodejs.org/) 13+
 - [Yarn](https://yarnpkg.com/)
 - [SQLite](https://sqlite.org/) 3+ (Can be substituted for any database supported by Ruby on Rails)
 
+For developing the app:
+
+- [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+
 ## Setup
 
-The setup script will install the application's dependencies and prepare the database.
+The setup script will install the app's dependencies and prepare the database.
 
     $ ./bin/setup
 
 Run the test suite to see if everything is working correctly.
 
     $ ./bin/rails test
+    $ ./bin/rails test:system
 
 Start the server on port 3000 and begin receiving requests:
 
@@ -75,4 +82,4 @@ Submit infected keys:
 
 ## License
 
-The software is available as open source under the terms of the MIT License. See LICENSE.
+This app is available as open source under the terms of the MIT License. See LICENSE.
