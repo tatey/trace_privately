@@ -1,4 +1,4 @@
-class InfectedKeysController < ApplicationController
+class Api::InfectedKeysController < ApplicationController
   skip_forgery_protection
 
   def index
