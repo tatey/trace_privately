@@ -19,7 +19,7 @@ For running or developing the app:
 - [Bundler](https://bundler.io/)
 - [Node](https://nodejs.org/) 13+
 - [Yarn](https://yarnpkg.com/)
-- [SQLite](https://sqlite.org/) 3+ (Can be substituted for any database supported by Ruby on Rails)
+- [PostgreSQL](https://www.postgresql.org) 10+ (Can be substituted for any database supported by Ruby on Rails)
 
 For developing the app:
 
