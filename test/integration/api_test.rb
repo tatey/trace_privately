@@ -98,6 +98,7 @@ class ApiTest < ActionDispatch::IntegrationTest
     end
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
+    assert_equal Submission.last.identifier, response.parsed_body["identifier"]
     assert Submission.last.pending?
   end
 

@@ -2,13 +2,16 @@ pending:
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
   result: pending
+  identifier: 8a8fbbad-affa-4819-9546-15e70d3d7131
 
 positive:
   created_at: <%= 1.day.ago %>
   updated_at: <%= 1.day.ago %>
   result: negative
+  identifier: 21532f3e-461d-4cb5-9304-602936757bc7
 
 negative:
   created_at: <%= 29.days.ago %>
   updated_at: <%= 29.days.ago %>
   result: positive
+  identifier: 03ace8ac-cfa5-4aee-95cb-538d6be31b88
