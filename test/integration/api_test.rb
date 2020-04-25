@@ -102,6 +102,12 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert Submission.last.pending?
   end
 
+  test "submitting a duplicate infected key" do
+    assert_raises ActiveRecord::RecordInvalid do
+      post "/api/submit", params: {keys: ["A", "A", "B"]}, as: :json
+    end
+  end
+
   test "submitting a malformed infected key" do
     assert_raises ActiveRecord::RecordInvalid do
       post "/api/submit", params: {keys: ["", "B", "C"]}, as: :json
