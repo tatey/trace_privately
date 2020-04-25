@@ -91,7 +91,7 @@ Submit infected keys:
     < HTTP/1.1 200 OK
     < Content-Type: application/json; charset=utf-8
     {
-      "status": "OK"
+      "status": "OK",
       "identifier": "21532f3e-461d-4cb5-9304-602936757bc7"
     }
 
