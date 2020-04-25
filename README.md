@@ -20,6 +20,7 @@ For running or developing the app:
 - [Node](https://nodejs.org/) 13+
 - [Yarn](https://yarnpkg.com/)
 - [PostgreSQL](https://www.postgresql.org) 10+ (Can be substituted for any database supported by Ruby on Rails)
+- [Redis](https://redis.io) 5+
 
 For developing the app:
 
