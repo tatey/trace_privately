@@ -15,3 +15,9 @@ negative:
   updated_at: <%= 29.days.ago %>
   result: positive
   identifier: 03ace8ac-cfa5-4aee-95cb-538d6be31b88
+
+expired:
+  created_at: <%= 31.days.ago %>
+  updated_at: <%= 31.days.ago %>
+  result: positive
+  identifier: 725ef781-5bea-4f7d-a601-c352acb73b70
