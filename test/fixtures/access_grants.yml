@@ -1,0 +1,7 @@
+current:
+  token: c6rxEAhRcWSh2y8WSF1bYwgA
+  expired_at: <%= 7.days.from_now %>
+
+expired:
+  token: GWCdx4UvySFMbFcp6YbsALkj
+  expired_at: <%= 1.minute.ago %>

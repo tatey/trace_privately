@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_125430) do
+ActiveRecord::Schema.define(version: 2020_04_26_040414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "access_grants", force: :cascade do |t|
+    t.string "token", null: false
+    t.datetime "expired_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["expired_at"], name: "index_access_grants_on_expired_at"
+    t.index ["token"], name: "index_access_grants_on_token", unique: true
+  end
 
   create_table "infected_keys", force: :cascade do |t|
     t.text "data", null: false
