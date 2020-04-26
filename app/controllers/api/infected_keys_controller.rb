@@ -1,6 +1,4 @@
-class Api::InfectedKeysController < ApplicationController
-  skip_forgery_protection
-
+class Api::InfectedKeysController < Api::BaseController
   def index
     submissions = Submission.changed_since(extract_since_from_params_or_default).by_recently_changed_first.limit(1_000) # TODO: Paginate?
     @updated_at = submissions.first&.updated_at || Time.current

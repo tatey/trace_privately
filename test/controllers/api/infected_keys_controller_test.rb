@@ -1,13 +1,17 @@
 require 'test_helper'
 
 class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
+  def default_options
+    {headers: {"Authorization" => "Bearer #{access_grants(:current).token}"}, as: :json}
+  end
+
   def setup
     Submission.destroy_all
     assert Submission.count.zero?
   end
 
   test "getting infected keys when there are none" do
-    get "/api/infected", as: :json
+    get "/api/infected", default_options
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
@@ -19,7 +23,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission.infected_keys.create!(data: "A")
     submission.infected_keys.create!(data: "B")
 
-    get "/api/infected", as: :json
+    get "/api/infected", default_options
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
@@ -38,7 +42,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission2.infected_keys.create!(data: "C")
     submission2.infected_keys.create!(data: "D")
 
-    get "/api/infected", params: {since: Time.zone.local(2020, 4, 19, 20, 40)}, as: :json
+    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
@@ -53,7 +57,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission.infected_keys.create!(data: "A")
     submission.infected_keys.create!(data: "B")
 
-    get "/api/infected", as: :json
+    get "/api/infected", default_options
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
@@ -75,7 +79,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission2.infected_keys.create!(data: "C")
     submission2.infected_keys.create!(data: "D")
 
-    get "/api/infected", params: {since: Time.zone.local(2020, 4, 19, 20, 40)}, as: :json
+    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
@@ -94,7 +98,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission2.infected_keys.create!(data: "C")
     submission2.infected_keys.create!(data: "D")
 
-    get "/api/infected", params: {since: 31.days.ago}, as: :json
+    get "/api/infected", default_options.merge(params: {since: 31.days.ago})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission2.updated_at.to_s(:iso8601), response.parsed_body["date"]
@@ -106,7 +110,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting infected keys" do
     assert_difference -> { Submission.count } => 1, -> { InfectedKey.count } => 3 do
-      post "/api/submit", params: {keys: ["A", "B", "C"]}, as: :json
+      post "/api/submit", default_options.merge(params: {keys: ["A", "B", "C"]})
     end
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
@@ -116,13 +120,13 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting a duplicate infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", params: {keys: ["A", "A", "B"]}, as: :json
+      post "/api/submit", default_options.merge(params: {keys: ["A", "A", "B"]})
     end
   end
 
   test "submitting a malformed infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", params: {keys: ["", "B", "C"]}, as: :json
+      post "/api/submit", default_options.merge(params: {keys: ["", "B", "C"]})
     end
   end
 end
