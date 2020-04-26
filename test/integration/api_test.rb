@@ -3,11 +3,10 @@ require 'test_helper'
 class ApiTest < ActionDispatch::IntegrationTest
   def setup
     Submission.destroy_all
+    assert Submission.count.zero?
   end
 
   test "getting infected keys when there are none" do
-    assert_equal 0, Submission.positive.count
-    assert_equal 0, Submission.negative.count
     get "/api/infected", as: :json
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
@@ -24,7 +23,9 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
-    assert_equal submission.infected_keys.pluck(:data), response.parsed_body["keys"]
+    submission.infected_keys.each do |key|
+      assert_includes response.parsed_body["keys"], key.data
+    end
     assert_empty response.parsed_body["deleted_keys"]
   end
 
@@ -41,7 +42,9 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
-    assert_equal submission1.infected_keys.pluck(:data), response.parsed_body["keys"]
+    submission1.infected_keys.each do |key|
+      assert_includes response.parsed_body["keys"], key.data
+    end
     assert_empty response.parsed_body["deleted_keys"]
   end
 
@@ -55,7 +58,12 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     assert_empty response.parsed_body["keys"]
-    assert_equal submission.infected_keys.pluck(:data), response.parsed_body["deleted_keys"]
+    submission.infected_keys.each do |key|
+      assert_includes response.parsed_body["deleted_keys"], key.data
+    end
+    submission.infected_keys.each do |key|
+      assert_includes response.parsed_body["deleted_keys"], key.data
+    end
   end
 
   test "getting negatively infected keys since a given timestamp" do
@@ -72,7 +80,9 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
-    assert_equal submission1.infected_keys.pluck(:data), response.parsed_body["deleted_keys"]
+    submission1.infected_keys.each do |key|
+      assert_includes response.parsed_body["deleted_keys"], key.data
+    end
   end
 
   test "getting infected keys is limited to a maximum of 30 days ago" do
@@ -88,7 +98,9 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission2.updated_at.to_s(:iso8601), response.parsed_body["date"]
-    assert_equal submission2.infected_keys.pluck(:data), response.parsed_body["keys"]
+    submission2.infected_keys.each do |key|
+      assert_includes response.parsed_body["keys"], key.data
+    end
     assert_empty response.parsed_body["deleted_keys"]
   end
 
