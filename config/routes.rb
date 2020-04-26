@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     get "infected", to: "infected_keys#index"
     post "submit", to: "infected_keys#create"
+    post "auth", to: "access_grants#create"
   end
 
   namespace :admin do
