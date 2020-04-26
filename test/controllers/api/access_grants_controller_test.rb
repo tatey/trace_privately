@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AccessGrantsControllerTest < ActionDispatch::IntegrationTest
+class Api::AccessGrantsControllerTest < ActionDispatch::IntegrationTest
   test "requesting access" do
     post "/api/auth", as: :json
     assert_response :ok

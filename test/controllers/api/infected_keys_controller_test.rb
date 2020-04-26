@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ApiTest < ActionDispatch::IntegrationTest
+class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
   def setup
     Submission.destroy_all
     assert Submission.count.zero?
