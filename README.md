@@ -56,9 +56,20 @@ View recent submissions and confirm test results.
 
 ### API
 
+Request an authentication token (Tokens expire after 7 days):
+
+    $ curl -s -v -X POST -H "Accept: application/json" "http://localhost:3000/api/auth" | jq
+    < HTTP/1.1 200 OK
+    < Content-Type: application/json; charset=utf-8
+    {
+      "status": "OK",
+      "token": "wXxgbZ8ztwZS5woTgpsBzNwY",
+      "expires_at": "2020-05-03T12:25:11Z"
+    }
+
 Get a list of infected keys since a specific time (Limited to 30 days ago):
 
-    $ curl -s -v -X GET -H "Accept: application/json" "http://localhost:3000/api/infected?since=2020-04-19T00:00:00Z" | jq
+    $ curl -s -v -X GET -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" -H "Accept: application/json" "http://localhost:3000/api/infected?since=2020-04-19T00:00:00Z" | jq
     < HTTP/1.1 200 OK
     < Content-Type: application/json; charset=utf-8
     {
@@ -87,7 +98,7 @@ Get a list of infected keys since a specific time (Limited to 30 days ago):
 
 Submit infected keys:
 
-    $ curl -s -v -X POST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":["RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI="]}' "http://localhost:3000/api/submit" | jq
+    $ curl -s -v -X POST -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":["RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI="]}' "http://localhost:3000/api/submit" | jq
     < HTTP/1.1 200 OK
     < Content-Type: application/json; charset=utf-8
     {
