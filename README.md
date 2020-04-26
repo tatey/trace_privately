@@ -41,9 +41,9 @@ Start the server on port 3000 and begin receiving requests:
 
     $ ./bin/rails server --port 3000
 
-Destroy all submissions older than 30 days:
+Destroy all expired submissions and expired access grants:
 
-    $ ./bin/rails destroy_expired_submissions
+    $ ./bin/rails db:prune
 
 ## Usage
 
