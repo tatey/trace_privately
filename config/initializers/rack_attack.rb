@@ -10,6 +10,8 @@ Rack::Attack.throttle("Noisy web clients", limit: 30, period: 1.minute) do |requ
   anonymize(request.ip) if request.path == "/" || request.path.starts_with?("/admin")
 end
 
+# Anonymize the client's IP by transforming it with a keyed hash function. This lets us discriminate
+# against noisy clients without storing personal information from well behaved clients.
 def anonymize(ip)
   IpAnonymizer.hash_ip(ip, key: Rails.application.secret_key_base)
 end

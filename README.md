@@ -1,6 +1,6 @@
 # HTTP Key Server for TracePrivately
 
-This is a sample HTTP key server for the sample [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress. If you want to help take a look at the [Issues](https://github.com/tatey/trace_privately/issues).
+This is a reference HTTP key server for the reference [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress. If you want to help take a look at the [Issues](https://github.com/tatey/trace_privately/issues).
 
 # Objectives
 
@@ -44,6 +44,19 @@ Start the server on port 3000 and begin receiving requests:
 Destroy all expired submissions and expired access grants:
 
     $ ./bin/rails db:prune
+
+## Security
+
+- Non-HTTP requests will be redirected to HTTPS. (See config/production.rb)
+- Noisy clients will be rate limited. (See config/initializers/rack_attack.rb)
+- Authentication tokens expire after 7 days.
+- Submissions and their infected keys expire after 30 days.
+- A task is scheduled to run once a day to destroy expired submissions and expired authentication tokens.
+- A submission needs to be confirmed before it's keys are included in the list of infected keys. This protects against false submissions.
+- No personal information is stored in the database or in the logs, including the client's IP addresses. (See config/application.rb and config/initializers/rack_attack.rb)
+- TODO: The admin section is protected with two factors of authentication. (See https://github.com/tatey/trace_privately/issues/20)
+- TODO: The API verifies the client is from a genuine installation of the TracePrivately app using the DeviceCheck API. (See https://github.com/tatey/trace_privately/issues/19)
+- Plus all the [protections you get built-in](https://guides.rubyonrails.org/security.html) from using Ruby on Rails.
 
 ## Usage
 
