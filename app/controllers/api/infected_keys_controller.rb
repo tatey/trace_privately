@@ -11,7 +11,7 @@ class Api::InfectedKeysController < Api::BaseController
     Submission.transaction do
       @submission = Submission.create!
       keys_data.each do |key_data|
-        @submission.infected_keys.create!(data: key_data)
+        @submission.infected_keys.create!(data: key_data[:d])
       end
     end
   end

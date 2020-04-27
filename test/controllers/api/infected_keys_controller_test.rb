@@ -110,7 +110,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting infected keys" do
     assert_difference -> { Submission.count } => 1, -> { InfectedKey.count } => 3 do
-      post "/api/submit", default_options.merge(params: {keys: ["A", "B", "C"]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A"}, {d: "B"}, {d: "C"}]})
     end
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
@@ -120,13 +120,13 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting a duplicate infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: ["A", "A", "B"]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A"}, {d: "A"}, {d: "B"}]})
     end
   end
 
-  test "submitting a malformed infected key" do
+  test "submitting a blank infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: ["", "B", "C"]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: ""}, {d: "B"}, {d: "C"}]})
     end
   end
 end
