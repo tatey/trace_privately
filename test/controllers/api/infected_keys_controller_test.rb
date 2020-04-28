@@ -20,8 +20,8 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "getting positively infected keys" do
     submission = Submission.positive.create!
-    submission.infected_keys.create!(data: "A")
-    submission.infected_keys.create!(data: "B")
+    submission.infected_keys.create!(data: "A", rolling_start_number: 1)
+    submission.infected_keys.create!(data: "B", rolling_start_number: 2)
 
     get "/api/infected", default_options
     assert_response :ok
@@ -35,12 +35,12 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "getting positively infected keys since a given timestamp" do
     submission1 = Submission.positive.create!(updated_at: Time.zone.local(2020, 4, 19, 20, 41))
-    submission1.infected_keys.create!(data: "A")
-    submission1.infected_keys.create!(data: "B")
+    submission1.infected_keys.create!(data: "A", rolling_start_number: 1)
+    submission1.infected_keys.create!(data: "B", rolling_start_number: 2)
 
     submission2 = Submission.positive.create!(updated_at: Time.zone.local(2020, 4, 19, 20, 39))
-    submission2.infected_keys.create!(data: "C")
-    submission2.infected_keys.create!(data: "D")
+    submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
+    submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
     get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
     assert_response :ok
@@ -54,8 +54,8 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "getting negatively infected keys" do
     submission = Submission.negative.create!
-    submission.infected_keys.create!(data: "A")
-    submission.infected_keys.create!(data: "B")
+    submission.infected_keys.create!(data: "A", rolling_start_number: 1)
+    submission.infected_keys.create!(data: "B", rolling_start_number: 2)
 
     get "/api/infected", default_options
     assert_response :ok
@@ -72,12 +72,12 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "getting negatively infected keys since a given timestamp" do
     submission1 = Submission.negative.create!(updated_at: Time.zone.local(2020, 4, 19, 20, 41))
-    submission1.infected_keys.create!(data: "A")
-    submission1.infected_keys.create!(data: "B")
+    submission1.infected_keys.create!(data: "A", rolling_start_number: 1)
+    submission1.infected_keys.create!(data: "B", rolling_start_number: 2)
 
     submission2 = Submission.negative.create!(updated_at: Time.zone.local(2020, 4, 19, 20, 39))
-    submission2.infected_keys.create!(data: "C")
-    submission2.infected_keys.create!(data: "D")
+    submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
+    submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
     get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
     assert_response :ok
@@ -91,12 +91,12 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "getting infected keys is limited to a maximum of 30 days ago" do
     submission1 = Submission.positive.create!(updated_at: 32.days.ago)
-    submission1.infected_keys.create!(data: "A")
-    submission1.infected_keys.create!(data: "B")
+    submission1.infected_keys.create!(data: "A", rolling_start_number: 1)
+    submission1.infected_keys.create!(data: "B", rolling_start_number: 2)
 
     submission2 = Submission.positive.create!(updated_at: 29.days.ago)
-    submission2.infected_keys.create!(data: "C")
-    submission2.infected_keys.create!(data: "D")
+    submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
+    submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
     get "/api/infected", default_options.merge(params: {since: 31.days.ago})
     assert_response :ok
@@ -110,7 +110,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting infected keys" do
     assert_difference -> { Submission.count } => 1, -> { InfectedKey.count } => 3 do
-      post "/api/submit", default_options.merge(params: {keys: [{d: "A"}, {d: "B"}, {d: "C"}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1}, {d: "B", r: 2}, {d: "C", r: 3}]})
     end
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
@@ -120,13 +120,13 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting a duplicate infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: [{d: "A"}, {d: "A"}, {d: "B"}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1}, {d: "A", r: 1}, {d: "B", r: 2}]})
     end
   end
 
   test "submitting a blank infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: [{d: ""}, {d: "B"}, {d: "C"}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "", r: ""}, {d: "B", r: 2}, {d: "C", r: 3}]})
     end
   end
 end

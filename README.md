@@ -111,7 +111,7 @@ Get a list of infected keys since a specific time (Limited to 30 days ago):
 
 Submit infected keys:
 
-    $ curl -s -v -X POST -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":[{"d":"RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI="}]}' "http://localhost:3000/api/submit" | jq
+    $ curl -s -v -X POST -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":[{"d":"RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI=","r":1234}]}' "http://localhost:3000/api/submit" | jq
     < HTTP/1.1 200 OK
     < Content-Type: application/json; charset=utf-8
     {
