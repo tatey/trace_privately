@@ -1,4 +1,4 @@
-# HTTP Key Server for TracePrivately
+# HTTP Key Server for TracePrivately [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 This is a reference HTTP key server for the reference [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately). Development is moving fast and this is a work-in-progress. If you want to help take a look at the [Issues](https://github.com/tatey/trace_privately/issues).
 
