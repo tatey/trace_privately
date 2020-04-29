@@ -16,7 +16,7 @@ A robust and fully featured key server for the [TracePrivately iOS app](https://
 ## Objectives
 
 - Be a robust companion to the [TracePrivately app](https://github.com/CrunchyBagel/TracePrivately)
-- Create a fully-functioning prototype that governments can use as an almost-turnkey solution that they can rebrand as necessary and use
+- Create a fully-functioning and portable prototype that governments can use as an almost-turnkey solution that they can rebrand as necessary and use
 - Tools for government agents or health professionals to manage submissions
 - Implement correct security, privacy, and testing principles to maximise uptake of said government apps
 - Remain open source for independent verification
@@ -97,8 +97,8 @@ For running or developing the app:
 - [Bundler](https://bundler.io/)
 - [Node](https://nodejs.org/) 13+
 - [Yarn](https://yarnpkg.com/)
-- [PostgreSQL](https://www.postgresql.org) 10+ (Can be substituted for any database supported by Ruby on Rails)
-- [Redis](https://redis.io) 5+
+- [PostgreSQL](https://www.postgresql.org) 10+ (Can be substituted for any database supported by Ruby on Rails such as MySQL)
+- [Redis](https://redis.io) 5+ (Can be substituted for any cache store supported by Ruby on Rails such as memcached)
 
 For developing the app:
 
