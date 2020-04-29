@@ -27,7 +27,7 @@ A robust and fully featured key server for the [TracePrivately iOS app](https://
 - Non-HTTP requests will be redirected to HTTPS. (See config/production.rb)
 - Noisy clients will be rate limited. (See config/initializers/rack_attack.rb)
 - Authentication tokens expire after 7 days and can be revoked any time.
-- Submissions and their infected keys expire after 21 days.
+- Submissions and their infected keys expire after 21 days. Submissions are limited to a maximum of 21 keys.
 - A daily task can be scheduled to to destroy expired submissions and expired authentication tokens.
 - A submission needs to be confirmed before it's keys are included in the list of infected keys.
 - No personal information is stored in the database or in the logs, including the client's IP addresses. (See config/application.rb and config/initializers/rack_attack.rb)

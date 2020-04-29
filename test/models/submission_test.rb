@@ -25,6 +25,16 @@ class SubmissionTest < ActiveSupport::TestCase
     end
   end
 
+  test "validates maximum number of infected keys" do
+    submission = Submission.create!
+    21.times do |n|
+      submission.infected_keys.create!(data: n, rolling_start_number: n)
+    end
+    submission.infected_keys.build(data: 22, rolling_start_number: 22)
+    assert_not submission.valid?
+    assert_not submission.errors[:infected_keys].empty?
+  end
+
   test "number" do
     assert_equal "#0000000001", Submission.new(id: 1).number
     assert_equal "#9999999999", Submission.new(id: 9999999999).number
