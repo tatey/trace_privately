@@ -9,7 +9,7 @@ class AccessGrantTest < ActiveSupport::TestCase
     end
   end
 
-  test "current returns tokens within their expiry timestamp" do
+  test "filtering current and expired submissions" do
     AccessGrant.destroy_all
     assert AccessGrant.count.zero?
 

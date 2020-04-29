@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_102242) do
+ActiveRecord::Schema.define(version: 2020_04_29_121037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(version: 2020_04_28_102242) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "identifier", limit: 36, null: false
+    t.datetime "expired_at", null: false
     t.index ["created_at"], name: "index_submissions_on_created_at"
+    t.index ["expired_at"], name: "index_submissions_on_expired_at"
     t.index ["identifier"], name: "index_submissions_on_identifier", unique: true
     t.index ["result"], name: "index_submissions_on_result"
     t.index ["updated_at"], name: "index_submissions_on_updated_at"
