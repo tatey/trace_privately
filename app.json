@@ -1,6 +1,6 @@
 {
-  "name": "trace_privately",
-  "description": "This is a reference HTTP key server for the reference TracePrivately app",
+  "name": "Key Server for TracePrivately",
+  "description": "A robust and fully featured key server for the TracePrivately app",
   "repository": "https://github.com/tatey/trace_privately",
   "keywords": ["ruby", "rails", "postgresql", "redis"],
   "addons": [
