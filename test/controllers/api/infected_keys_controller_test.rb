@@ -28,7 +28,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], key.data
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -47,7 +47,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission1.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], key.data
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -63,10 +63,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     assert_empty response.parsed_body["keys"]
     submission.infected_keys.each do |key|
-      assert_includes response.parsed_body["deleted_keys"], key.data
-    end
-    submission.infected_keys.each do |key|
-      assert_includes response.parsed_body["deleted_keys"], key.data
+      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
   end
 
@@ -85,7 +82,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_empty response.parsed_body["keys"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission1.infected_keys.each do |key|
-      assert_includes response.parsed_body["deleted_keys"], key.data
+      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
   end
 
@@ -103,7 +100,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission2.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission2.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], key.data
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
