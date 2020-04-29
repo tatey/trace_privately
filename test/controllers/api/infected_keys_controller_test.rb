@@ -42,12 +42,15 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
     submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
-    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
+    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40).to_s(:iso8601)})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission1.infected_keys.each do |key|
       assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
+    end
+    submission2.infected_keys.each do |key|
+      assert_not_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -76,7 +79,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
     submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
-    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40)})
+    get "/api/infected", default_options.merge(params: {since: Time.zone.local(2020, 4, 19, 20, 40).to_s(:iso8601)})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_empty response.parsed_body["keys"]
@@ -84,18 +87,21 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     submission1.infected_keys.each do |key|
       assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
     end
+    submission2.infected_keys.each do |key|
+      assert_not_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
+    end
   end
 
-  test "getting infected keys is limited to a maximum of 30 days ago" do
-    submission1 = Submission.positive.create!(updated_at: 32.days.ago)
+  test "getting infected keys is limited to a maximum of 21 days ago" do
+    submission1 = Submission.positive.create!(expired_at: 2.days.ago)
     submission1.infected_keys.create!(data: "A", rolling_start_number: 1)
     submission1.infected_keys.create!(data: "B", rolling_start_number: 2)
 
-    submission2 = Submission.positive.create!(updated_at: 29.days.ago)
+    submission2 = Submission.positive.create!(expired_at: 2.days.from_now)
     submission2.infected_keys.create!(data: "C", rolling_start_number: 1)
     submission2.infected_keys.create!(data: "D", rolling_start_number: 2)
 
-    get "/api/infected", default_options.merge(params: {since: 31.days.ago})
+    get "/api/infected", default_options.merge(params: {since: Time.current.to_s(:iso8601)})
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission2.updated_at.to_s(:iso8601), response.parsed_body["date"]
