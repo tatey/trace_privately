@@ -1,39 +1,47 @@
 Xzk:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2Xzk=
   rolling_start_number: 1
+  risk_level: 20
   submission: pending
 
 zg=:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2Xzg=
   rolling_start_number: 2
+  risk_level: 30
   submission: pending
 
 zEz:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEz
   rolling_start_number: 3
+  risk_level: 40
   submission: positive
 
 zEy:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEy
   rolling_start_number: 4
+  risk_level: 50
   submission: positive
 
 zEx:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEx
   rolling_start_number: 5
+  risk_level: 60
   submission: negative
 
 zEw:
   data: RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEw
   rolling_start_number: 6
+  risk_level: 70
   submission: negative
 
 DIz:
   data: MjJGMDIxMkMtMDEzNS00RkRGLThCRTQtMUQzMzZBQUEyMTRCXzIwMjAwNDIz
   rolling_start_number: 7
+  risk_level: 80
   submission: expired
 
 DIx:
   data: MjJGMDIxMkMtMDEzNS00RkRGLThCRTQtMUQzMzZBQUEyMTRCXzIwMjAwNDIx
   rolling_start_number: 8
+  risk_level: 90
   submission: expired

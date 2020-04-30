@@ -66,20 +66,22 @@ Get a list of infected keys since a specific time (Limited to 21 days ago):
       "keys": [
         {
           "d": "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEz",
-          "r": 1
+          "r": 1,
+          "l": 20
         },
       ],
       "deleted_keys": [
         {
           "d": "RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzEy",
-          "r": 2
+          "r": 2,
+          "l": 20
         }
       ]
     }
 
 Submit infected keys:
 
-    $ curl -s -v -X POST -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":[{"d":"RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI=","r":1234}]}' "http://localhost:3000/api/submit" | jq
+    $ curl -s -v -X POST -H "Authorization: Bearer wXxgbZ8ztwZS5woTgpsBzNwY" "Accept: application/json" -H "Content-Type: application/json" -d '{"keys":[{"d":"RDgwNjlEM0EtMzU2OC00MzY4LTkzRjAtQTA4MzVFNkREQjI2XzI=","r":1234,"l":20}]}' "http://localhost:3000/api/submit" | jq
     < HTTP/1.1 200 OK
     < Content-Type: application/json; charset=utf-8
     {

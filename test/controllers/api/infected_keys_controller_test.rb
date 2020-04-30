@@ -28,7 +28,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -47,10 +47,10 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission1.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
     submission2.infected_keys.each do |key|
-      assert_not_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_not_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
@@ -66,7 +66,7 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal submission.updated_at.to_s(:iso8601), response.parsed_body["date"]
     assert_empty response.parsed_body["keys"]
     submission.infected_keys.each do |key|
-      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
   end
 
@@ -85,10 +85,10 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_empty response.parsed_body["keys"]
     assert_equal submission1.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission1.infected_keys.each do |key|
-      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
     submission2.infected_keys.each do |key|
-      assert_not_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_not_includes response.parsed_body["deleted_keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level}
     end
   end
 
@@ -106,14 +106,14 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
     assert_equal "OK", response.parsed_body["status"]
     assert_equal submission2.updated_at.to_s(:iso8601), response.parsed_body["date"]
     submission2.infected_keys.each do |key|
-      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number}
+      assert_includes response.parsed_body["keys"], {"d" => key.data, "r" => key.rolling_start_number, "l" => key.risk_level }
     end
     assert_empty response.parsed_body["deleted_keys"]
   end
 
   test "submitting infected keys" do
     assert_difference -> { Submission.count } => 1, -> { InfectedKey.count } => 3 do
-      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1}, {d: "B", r: 2}, {d: "C", r: 3}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1, l: 1,}, {d: "B", r: 2, l: 1}, {d: "C", r: 3, l: 1}]})
     end
     assert_response :ok
     assert_equal "OK", response.parsed_body["status"]
@@ -123,13 +123,13 @@ class Api::InfectedKeysControllerTest < ActionDispatch::IntegrationTest
 
   test "submitting a duplicate infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1}, {d: "A", r: 1}, {d: "B", r: 2}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "A", r: 1, l: 1}, {d: "A", r: 1, l: 1}, {d: "B", r: 2, l: 2}]})
     end
   end
 
   test "submitting a blank infected key" do
     assert_raises ActiveRecord::RecordInvalid do
-      post "/api/submit", default_options.merge(params: {keys: [{d: "", r: ""}, {d: "B", r: 2}, {d: "C", r: 3}]})
+      post "/api/submit", default_options.merge(params: {keys: [{d: "", r: "", l: ""}, {d: "B", r: 2, l: 2}, {d: "C", r: 3, l: 3}]})
     end
   end
 end
