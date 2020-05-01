@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_123623) do
+ActiveRecord::Schema.define(version: 2020_05_01_102305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2020_04_30_123623) do
     t.integer "submission_id", null: false
     t.integer "rolling_start_number", null: false
     t.integer "risk_level", default: 0, null: false
-    t.index ["data", "submission_id"], name: "index_infected_keys_on_data_and_submission_id", unique: true
     t.index ["submission_id"], name: "index_infected_keys_on_submission_id"
   end
 
